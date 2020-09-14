@@ -1,4 +1,5 @@
 function sendTweet() {
+
     let tweetTitle = document.getElementById('title-input').value;
     let tweetBody = document.getElementById('body-input').value;
     
@@ -29,6 +30,7 @@ let tweetButton = document.getElementById('tweet-submit');
 tweetButton.addEventListener('click', sendTweet);
 
 function patchTweet() {
+
     let tweetTitle = document.getElementById('title-input').value;
     let tweetBody = document.getElementById('body-input').value;
     
@@ -58,6 +60,7 @@ function patchTweet() {
 patchTweet();
 
 function deleteTweet() {
+
     let ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
@@ -70,7 +73,32 @@ function deleteTweet() {
     }
 
     ajax.open('DELETE', 'https://jsonplaceholder.typicode.com/posts/1', true);
+    ajax.setRequestHeader('Content-Type', 'application/json');
     ajax.send();
 }
 
 deleteTweet();
+
+function getTweet() {
+
+    let ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            let posts = JSON.parse(this.responseText);
+            for(i = 0; i < posts.length; i++) {
+                let allTweets = document.getElementById('tweet-shows');
+                allTweets.innerHTML = " ";
+            }
+        } else if(this.readyState != 4) {
+            console.log('Loading...');
+        } else {
+            console.log('Something Went Wrong!');
+        }
+    }
+
+    ajax.open('DELETE', 'https://jsonplaceholder.typicode.com/posts/1', true);
+    ajax.setRequestHeader('Content-Type', 'application/json');
+    ajax.send();
+}
+
+getTweet();

@@ -68,7 +68,7 @@ function deleteTweet() {
         } else if(this.readyState != 4) {
             console.log('deleting...');
         } else {
-            console.log('delete fails');
+            console.log('delete failed!');
         }
     }
 
@@ -79,15 +79,14 @@ function deleteTweet() {
 
 deleteTweet();
 
-function getTweet() {
+function getTweets() {
 
     let ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
+        let allTweets = document.getElementById('tweet-shows');
+        if(this.readyState == 4 && this.status == 201) {
             let posts = JSON.parse(this.responseText);
             for(i = 0; i < posts.length; i++) {
-                let allTweets = document.getElementById('tweet-shows');
-                allTweets.innerHTML = " ";
             }
         } else if(this.readyState != 4) {
             console.log('Loading...');
@@ -96,9 +95,7 @@ function getTweet() {
         }
     }
 
-    ajax.open('DELETE', 'https://jsonplaceholder.typicode.com/posts/1', true);
+    ajax.open('GET', 'https://jsonplaceholder.typicode.com/posts', true);
     ajax.setRequestHeader('Content-Type', 'application/json');
     ajax.send();
 }
-
-getTweet();
